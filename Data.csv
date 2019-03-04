@@ -1,0 +1,25 @@
+﻿Park,City,Type,Parakeets,Great Spotted Woodpecker,Green Woodpecker,Jackdaw,Starling,Nuthatch,Stock Dove,Great Tit,Blue Tit,Area (hectares),Percentage Large Old Tree Cover,Percentage Tree Cover,Percentage Water Cover,Percentage Shrub Cover,Distance from City Centre (km),Distance from nearest Greenspace (km),Visitor Numbers
+Platt Fields,Manchester,Park,40,1,0,3,25,2,1,8,6,34,5,10,5,2,2,0.2,Busy
+Birchfields Park,Manchester,Park,2,2,0,2,3,1,2,10,8,12,10,16,0,5,2,0.2,Moderate
+Cringle Park,Manchester,Park,0,0,0,0,0,2,0,3,4,20,0,2,0,2,3,0.2,Moderate
+Ladybarn Park,Manchester,Park,2,0,0,2,0,1,0,3,6,9,5,10,0,2,3.5,0.5,Quiet
+Fog Lane Park,Manchester,Park,3,1,0,8,2,1,0,2,6,19,10,15,0,4,4,0.4,Quiet
+Alexandra Park,Manchester,Park,10,1,0,3,25,2,1,4,2,24,30,50,5,5,1,0.2,Moderate
+Southern Cemetery,Manchester,Cemetery,0,1,0,77,135,3,2,4,12,53,12,20,0,1,4,0,Quiet
+Fletcher Moss Park,Manchester,Park,38,1,2,2,20,8,2,28,21,58,20,30,0,5,5,0,Moderate
+Longford Park,Manchester,Park,3,2,0,4,6,5,1,17,12,27,5,10,0,5,2.5,0.1,Busy
+Whitworth Park,Manchester,Park,2,1,0,2,0,2,0,2,6,9,50,50,0,0,1,1,Busy
+Wythenshaw Park,Manchester,Park,1,2,1,5,16,3,1,18,12,109,30,40,0,5,7,1,Moderate
+Brookdale Park,Manchester,Park,0,1,0,0,2,2,0,6,1,1.5,2,5,0,2,2.5,0.5,Moderate
+Crowcroft Park,Manchester,Park,0,0,0,0,4,0,0,2,7,6,10,40,0,2,2.5,0.2,Quiet
+Hullard Park,Manchester,Park,0,0,0,0,0,0,0,3,8,4,0,5,0,2,0.8,0.2,Moderate
+Hulme Park,Manchester,Park,0,0,0,0,7,0,0,1,2,0.8,0,2,0,1,0.2,0.2,Moderate
+Queen's Park,Manchester,Park,0,1,0,0,0,2,0,2,9,14,5,10,0,2,1,0.2,Moderate
+Heaton Park,Manchester,Park,0,2,0,60,5,2,0,3,5,287,5,20,5,4,4,0,Moderate
+Temple Newsam Park,Leeds,Park,0,6,0,50,20,4,1,12,1,55,5,10,0,10,3,0,Busy
+Manston Park,Leeds,Park,0,0,0,0,85,0,0,12,2,5.3,2,4,0,1,5,0.2,Moderate
+Roundhay Park,Leeds,Park,0,1,0,1,20,2,0,1,1,29,10,20,10,5,3,0,Moderate
+Woodhouse Moor,Leeds,Park,0,0,0,1,1,1,0,2,4,26,5,10,0,1,0.5,0,Busy
+Crookes Valley Park,Sheffield,Park,0,0,0,0,1,1,1,2,4,5,10,20,10,2,0.2,0.8,Busy
+Sheffield Botanical Gardens,Sheffield,Park,0,1,0,0,0,0,0,0,3,8,2,10,0,10,1,0.5,Busy
+Graves Park,Sheffield,Park,0,2,0,1,2,2,0,1,2,87,10,15,0,4,4.5,1,Moderate

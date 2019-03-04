@@ -1,0 +1,85 @@
+---
+title: "Parakeets"
+output: html_notebook
+---
+
+```{r setup}
+setwd("/Users/jamese.richardson/Projects/Masters/stats_poster")
+list.files()
+
+library(tidyverse)
+library(ggplot2)
+library(vegan)
+```
+
+
+```{r}
+data  <- read_csv("Data.csv")
+head(data)
+```
+
+```{r}
+names(data)
+data[4:12]
+```
+```{r}
+spp.rich <- specnumber(data[4:12], MARGIN=1) 
+shannon <- diversity(data[4:12])
+
+data <- cbind(data, spp.rich, shannon)
+
+ggplot(data, aes(x=City, y=shannon)) + 
+  geom_boxplot()
+```
+```{r}
+ggplot(data, aes(x=City, y=spp.rich)) + 
+  geom_boxplot()
+```
+
+```{r}
+nmds <- metaMDS(data[4:12], k=2, trymax = 30) 
+
+
+```
+
+```{r}
+plot(nmds, display = "sites")
+with(data, ordiellipse(nmds, City, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+with(data, ordispider(nmds, City, label=TRUE))
+```
+
+```{r}
+names(data)
+pairs(data[13:19])
+```
+
+```{r}
+names(data)
+cor(data[13:19])
+```
+
+```{r}
+
+ef <- envfit(nmds, data[13:19], na.rm = TRUE, permu = 999) 
+ef
+
+```
+
+```{r}
+plot(nmds, display = "sites")
+with(data, ordiellipse(nmds, City, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+plot(ef, p.max = 0.1)
+```
+
+
+
+```{r}
+env.pca <- rda(data[13:19], scale=TRUE) 
+summary(env.pca)
+biplot(env.pca)
+
+```
+
+
+
+
