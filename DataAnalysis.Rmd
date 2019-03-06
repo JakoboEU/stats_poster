@@ -22,64 +22,158 @@ head(data)
 names(data)
 data[4:12]
 ```
-```{r}
-spp.rich <- specnumber(data[4:12], MARGIN=1) 
-shannon <- diversity(data[4:12])
 
-data <- cbind(data, spp.rich, shannon)
 
-ggplot(data, aes(x=City, y=shannon)) + 
-  geom_boxplot()
-```
 ```{r}
-ggplot(data, aes(x=City, y=spp.rich)) + 
-  geom_boxplot()
+cor(data[5:13])
 ```
 
 ```{r}
-nmds <- metaMDS(data[4:12], k=2, trymax = 30) 
+names(data)
+names(data[5:13])
+spp.rich <- specnumber(data[5:13], MARGIN=1) 
+shannon <- diversity(data[5:13])
 
+spp.rich.without.parakeet <- specnumber(data[6:13], MARGIN=1) 
+shannon.without.parakeet <- diversity(data[6:13])
+
+data <- cbind(data, spp.rich, shannon, spp.rich.without.parakeet, shannon.without.parakeet)
+
+names(data)
+ggplot(data, aes(x=city, y=shannon)) + 
+  geom_boxplot()
+
+
+ggplot(data, aes(x=city, y=spp.rich.without.parakeet)) + 
+  geom_boxplot()
+
+ggplot(data, aes(x=city_type, y=spp.rich.without.parakeet)) + 
+  geom_boxplot()
+```
+
+```{r}
+ggplot(data, aes(x=city, y=spp.rich)) + 
+  geom_boxplot()
+```
+
+```{r}
+nmds <- metaMDS(data[5:13], k=2, trymax = 30) 
+
+nmds.no.parakeet <- metaMDS(data[6:13], k=2, trymax = 30) 
 
 ```
 
 ```{r}
 plot(nmds, display = "sites")
-with(data, ordiellipse(nmds, City, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
-with(data, ordispider(nmds, City, label=TRUE))
+with(data, ordiellipse(nmds, city, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+with(data, ordispider(nmds, city, label=TRUE))
+```
+
+
+```{r}
+plot(nmds, display = "sites")
+with(data, ordiellipse(nmds.no.parakeet, city_type, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+with(data, ordispider(nmds.no.parakeet, city_type, label=TRUE))
+```
+
+
+
+
+```{r}
+names(data)
+names(data[14:24])
+pairs(data[14:24])
 ```
 
 ```{r}
 names(data)
-pairs(data[13:19])
-```
-
-```{r}
-names(data)
-cor(data[13:19])
+cor(data[14:24])
 ```
 
 ```{r}
 
-ef <- envfit(nmds, data[13:19], na.rm = TRUE, permu = 999) 
+ef <- envfit(nmds, data[14:24], na.rm = TRUE, permu = 999) 
 ef
 
 ```
 
 ```{r}
-plot(nmds, display = "sites")
-with(data, ordiellipse(nmds, City, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
-plot(ef, p.max = 0.1)
+
+ef.with.parakeet <- envfit(nmds, data[c(5, 14:24)], na.rm = TRUE, permu = 999) 
+ef.with.parakeet
+
 ```
 
 
 
 ```{r}
-env.pca <- rda(data[13:19], scale=TRUE) 
+plot(nmds, display = "sites")
+with(data, ordiellipse(nmds, city, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+plot(ef, p.max = 0.1)
+```
+
+```{r}
+#jpeg(filename="communities.jpg")
+plot(nmds.no.parakeet, display = "sites")
+with(data, ordiellipse(nmds.no.parakeet, city_type, col=4, lwd=2, draw = "polygon", kind = c("sd")), label=T) 
+plot(ef.with.parakeet, p.max = 0.1)
+with(data, ordispider(nmds.no.parakeet, city_type, label=TRUE))
+#dev.off()
+```
+
+
+
+```{r}
+env.pca <- rda(data[14:24], scale=TRUE) 
 summary(env.pca)
 biplot(env.pca)
 
 ```
 
 
+```{r}
+names(data)
+```
 
 
+```{r}
+model1 <- lm(nuthatch~parakeet + perc_large_tree_cover + area_hect + distance_city_km, data = data)
+summary(model1)
+```
+```{r}
+model2 <- lm(nuthatch~parakeet * perc_large_tree_cover * area_hect * distance_city_km, data = data)
+summary(model2)
+```
+
+```{r}
+model3 <- glm(spp.rich~parakeet + large_tree_cover_hect + area_hect + distance_city_km + shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
+summary(model3)
+```
+
+
+```{r}
+model4 <- glm(spp.rich~parakeet * large_tree_cover_hect * area_hect * distance_city_km * shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
+summary(model4)
+```
+
+
+
+
+```{r}
+model5 <- glm(shannon~parakeet + large_tree_cover_hect + area_hect + distance_city_km + shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
+summary(model5)
+```
+
+
+
+```{r}
+model6 <- glm(spp.rich~great_spotted_woodpecker + large_tree_cover_hect + area_hect + distance_city_km + shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
+summary(model6)
+```
+
+
+
+```{r}
+model7 <- glm(spp.rich~great_spotted_woodpecker * large_tree_cover_hect * area_hect * distance_city_km * shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
+summary(model7)
+```

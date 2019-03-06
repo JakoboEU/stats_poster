@@ -1,25 +1,28 @@
-﻿Park,City,Type,Parakeets,Great Spotted Woodpecker,Green Woodpecker,Jackdaw,Starling,Nuthatch,Stock Dove,Great Tit,Blue Tit,Area (hectares),Percentage Large Old Tree Cover,Percentage Tree Cover,Percentage Water Cover,Percentage Shrub Cover,Distance from City Centre (km),Distance from nearest Greenspace (km),Visitor Numbers
-Platt Fields,Manchester,Park,40,1,0,3,25,2,1,8,6,34,5,10,5,2,2,0.2,Busy
-Birchfields Park,Manchester,Park,2,2,0,2,3,1,2,10,8,12,10,16,0,5,2,0.2,Moderate
-Cringle Park,Manchester,Park,0,0,0,0,0,2,0,3,4,20,0,2,0,2,3,0.2,Moderate
-Ladybarn Park,Manchester,Park,2,0,0,2,0,1,0,3,6,9,5,10,0,2,3.5,0.5,Quiet
-Fog Lane Park,Manchester,Park,3,1,0,8,2,1,0,2,6,19,10,15,0,4,4,0.4,Quiet
-Alexandra Park,Manchester,Park,10,1,0,3,25,2,1,4,2,24,30,50,5,5,1,0.2,Moderate
-Southern Cemetery,Manchester,Cemetery,0,1,0,77,135,3,2,4,12,53,12,20,0,1,4,0,Quiet
-Fletcher Moss Park,Manchester,Park,38,1,2,2,20,8,2,28,21,58,20,30,0,5,5,0,Moderate
-Longford Park,Manchester,Park,3,2,0,4,6,5,1,17,12,27,5,10,0,5,2.5,0.1,Busy
-Whitworth Park,Manchester,Park,2,1,0,2,0,2,0,2,6,9,50,50,0,0,1,1,Busy
-Wythenshaw Park,Manchester,Park,1,2,1,5,16,3,1,18,12,109,30,40,0,5,7,1,Moderate
-Brookdale Park,Manchester,Park,0,1,0,0,2,2,0,6,1,1.5,2,5,0,2,2.5,0.5,Moderate
-Crowcroft Park,Manchester,Park,0,0,0,0,4,0,0,2,7,6,10,40,0,2,2.5,0.2,Quiet
-Hullard Park,Manchester,Park,0,0,0,0,0,0,0,3,8,4,0,5,0,2,0.8,0.2,Moderate
-Hulme Park,Manchester,Park,0,0,0,0,7,0,0,1,2,0.8,0,2,0,1,0.2,0.2,Moderate
-Queen's Park,Manchester,Park,0,1,0,0,0,2,0,2,9,14,5,10,0,2,1,0.2,Moderate
-Heaton Park,Manchester,Park,0,2,0,60,5,2,0,3,5,287,5,20,5,4,4,0,Moderate
-Temple Newsam Park,Leeds,Park,0,6,0,50,20,4,1,12,1,55,5,10,0,10,3,0,Busy
-Manston Park,Leeds,Park,0,0,0,0,85,0,0,12,2,5.3,2,4,0,1,5,0.2,Moderate
-Roundhay Park,Leeds,Park,0,1,0,1,20,2,0,1,1,29,10,20,10,5,3,0,Moderate
-Woodhouse Moor,Leeds,Park,0,0,0,1,1,1,0,2,4,26,5,10,0,1,0.5,0,Busy
-Crookes Valley Park,Sheffield,Park,0,0,0,0,1,1,1,2,4,5,10,20,10,2,0.2,0.8,Busy
-Sheffield Botanical Gardens,Sheffield,Park,0,1,0,0,0,0,0,0,3,8,2,10,0,10,1,0.5,Busy
-Graves Park,Sheffield,Park,0,2,0,1,2,2,0,1,2,87,10,15,0,4,4.5,1,Moderate
+park,city,city_type,type,parakeet,great_spotted_woodpecker,green_woodpecker,jackdaw,starling,nuthatch,stock_dove,great_tit,blue_tit,area_hect,perc_large_tree_cover,large_tree_cover_hect,perc_tree_cover,tree_cover_hect,perc_water_cover,water_cover_hect,perc_shrub_cover,shrub_cover_hect,distance_city_km,distance_greenspace_km,busyness
+Platt Fields,Manchester,With_Parakeet,Park,40,2,0,30,50,4,1,15,17,34,5,1.7,10,3.4,5,1.7,2,0.68,2,0.2,Busy
+Birchfields Park,Manchester,With_Parakeet,Park,6,2,0,2,4,3,2,10,13,12,10,1.2,16,1.92,0,0,5,0.6,2,0.2,Moderate
+Cringle Park,Manchester,With_Parakeet,Park,0,0,0,0,0,2,0,3,4,20,0,0,2,0.4,0,0,2,0.4,3,0.2,Moderate
+Ladybarn Park,Manchester,With_Parakeet,Park,2,0,0,2,0,1,0,3,6,9,5,0.45,10,0.9,0,0,2,0.18,3.5,0.5,Quiet
+Fog Lane Park,Manchester,With_Parakeet,Park,7,1,0,8,45,7,0,10,20,19,10,1.9,15,2.85,0,0,4,0.76,4,0.4,Quiet
+Alexandra Park,Manchester,With_Parakeet,Park,10,1,0,3,25,8,1,24,22,24,30,7.2,50,12,5,1.2,5,1.2,1,0.2,Moderate
+Southern Cemetery,Manchester,With_Parakeet,Cemetery,0,1,0,93,135,3,2,4,12,53,12,6.36,20,10.6,0,0,1,0.53,4,0,Quiet
+Fletcher Moss Park,Manchester,With_Parakeet,Park,38,4,2,10,30,8,4,28,21,58,20,11.6,30,17.4,0,0,5,2.9,5,0,Moderate
+Longford Park,Manchester,With_Parakeet,Park,14,2,0,4,22,5,1,17,25,27,5,1.35,10,2.7,0,0,5,1.35,2.5,0.1,Busy
+Whitworth Park,Manchester,With_Parakeet,Park,5,1,0,2,0,4,0,5,9,9,50,4.5,50,4.5,0,0,0,0,1,1,Busy
+Wythenshaw Park,Manchester,With_Parakeet,Park,3,5,1,20,16,8,6,25,18,109,30,32.7,40,43.6,0,0,5,5.45,7,1,Moderate
+Brookdale Park,Manchester,With_Parakeet,Park,0,1,0,0,2,6,0,6,1,1.5,2,0.03,5,0.075,0,0,2,0.03,2.5,0.5,Moderate
+Crowcroft Park,Manchester,With_Parakeet,Park,0,0,0,0,4,0,0,7,7,6,10,0.6,40,2.4,0,0,2,0.12,2.5,0.2,Quiet
+Hullard Park,Manchester,With_Parakeet,Park,0,0,0,0,0,0,0,3,8,4,0,0,5,0.2,0,0,2,0.08,0.8,0.2,Moderate
+Hulme Park,Manchester,With_Parakeet,Park,0,0,0,0,7,0,0,1,2,0.8,0,0,2,0.016,0,0,1,0.008,0.2,0.2,Moderate
+Queen's Park,Manchester,With_Parakeet,Park,0,1,0,0,0,2,0,2,9,14,5,0.7,10,1.4,0,0,2,0.28,1,0.2,Moderate
+Heaton Park,Manchester,With_Parakeet,Park,0,2,0,60,98,4,0,12,15,287,5,14.35,20,57.4,5,14.35,4,11.48,4,0,Moderate
+Temple Newsam Park,Leeds,Without_Parakeet,Park,0,6,0,50,20,4,1,12,4,55,5,2.75,10,5.5,0,0,10,5.5,3,0,Busy
+Manston Park,Leeds,Without_Parakeet,Park,0,0,0,0,150,0,0,12,8,5.3,2,0.106,4,0.212,0,0,1,0.053,5,0.2,Moderate
+Roundhay Park,Leeds,Without_Parakeet,Park,0,1,0,1,20,2,0,1,2,29,10,2.9,20,5.8,10,2.9,5,1.45,3,0,Moderate
+Woodhouse Moor,Leeds,Without_Parakeet,Park,0,0,0,2,40,1,0,6,8,26,5,1.3,10,2.6,0,0,1,0.26,0.5,0,Busy
+Crookes Valley Park,Sheffield,Without_Parakeet,Park,0,0,0,0,1,1,1,2,4,5,10,0.5,20,1,10,0.5,2,0.1,0.2,0.8,Busy
+Sheffield Botanical Gardens,Sheffield,Without_Parakeet,Park,0,1,0,0,0,0,0,0,3,8,2,0.16,10,0.8,0,0,10,0.8,1,0.5,Busy
+Graves Park,Sheffield,Without_Parakeet,Park,0,2,0,53,2,3,0,8,10,87,10,8.7,15,13.05,0,0,4,3.48,4.5,1,Moderate
+Bramall Park,Manchester,With_Parakeet,Park,3,1,0,2,1,2,0,10,10,26,50,13,75,19.5,3,0.78,2,0.52,12,0.2,Moderate
+Ardwick Green Park,Manchester,With_Parakeet,Park,0,0,0,0,56,0,0,4,8,2.5,10,0.25,50,1.25,0,0,5,0.125,0.5,0.5,Moderate
+All Saints Park,Manchester,With_Parakeet,Park,0,0,0,0,1,0,0,2,5,0.5,2,0.01,10,0.05,0,0,2,0.01,0.2,0.2,Busy
