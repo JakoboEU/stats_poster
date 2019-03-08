@@ -4,6 +4,7 @@ output: html_notebook
 ---
 
 ```{r setup}
+rm(list=ls())
 setwd("/Users/jamese.richardson/Projects/Masters/stats_poster")
 list.files()
 
@@ -12,6 +13,105 @@ library(ggplot2)
 library(vegan)
 ```
 
+
+
+```{r}
+birdData <- read_csv("manchesterbirding.csv")
+head(birdData)
+birdDataCountsOnly <- birdData[birdData$count != 'X',]
+birdDataCountsOnly$count_num <- as.numeric(birdDataCountsOnly$count)
+```
+
+```{r}
+birdTable <- with(birdDataCountsOnly, tapply(count_num, list(site, species), FUN = mean, default=0))
+head(birdTable)
+```
+
+
+```{r}
+birdDataDf <- as.data.frame.matrix(birdTable)
+
+
+library(data.table)
+birdDataDf <- setDT(birdDataDf, keep.rownames = TRUE)[]
+colnames(birdDataDf)[colnames(birdDataDf)=="rn"] <- "Site"
+head(birdDataDf)
+```
+
+
+```{r}
+parkData <- read_csv("parkdata.csv")
+head(parkData)
+allData <- inner_join(birdDataDf, parkData,by="Site")
+head(allData)
+```
+
+```{r}
+names(allData)
+```
+
+species data: 2:10
+env data: 12:15
+
+```{r}
+names(allData[2:10])
+```
+
+```{r}
+names(allData[12:15])
+```
+
+```{r}
+spp.rich <- specnumber(allData[2:10], MARGIN=1) 
+shannon <- diversity(allData[2:10])
+
+encrichedData <- cbind(allData, spp.rich, shannon)
+head(encrichedData)
+
+encrichedData[encrichedData$`Ring-necked Parakeet` == 0,]$has_parakeet <- "No"
+encrichedData[encrichedData$`Ring-necked Parakeet` > 0,]$has_parakeet <- "Yes"
+
+head(encrichedData)
+```
+
+```{r}
+ggplot(encrichedData, aes(x=has_parakeet, y=shannon)) + 
+  geom_boxplot()
+
+```
+
+
+```{r}
+nmds <- metaMDS(encrichedData[2:10], k=2, trymax = 30) 
+
+plot(nmds, display = "sites")
+with(encrichedData, ordiellipse(nmds, has_parakeet, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+with(encrichedData, ordispider(nmds, has_parakeet, label=TRUE))
+```
+
+```{r}
+ef <- envfit(nmds, encrichedData[12:15], na.rm = TRUE, permu = 999) 
+ef
+```
+
+
+```{r}
+plot(nmds, display = "sites")
+with(encrichedData, ordiellipse(nmds, has_parakeet, col=4, lwd=2, draw = "polygon", kind = c("sd")), label=T) 
+plot(ef, p.max = 0.2)
+with(encrichedData, ordispider(nmds, has_parakeet, label=TRUE))
+```
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+OLD DATA:
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
 
 ```{r}
 data  <- read_csv("Data.csv")
