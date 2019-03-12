@@ -64,10 +64,17 @@ names(allData[12:17])
 ```
 
 ```{r}
+names(allData[,c(2,3,4,5,6,7,9,10)])
+```
+
+```{r}
 spp.rich <- specnumber(allData[2:10], MARGIN=1) 
 shannon <- diversity(allData[2:10])
 
-enrichedData <- cbind(allData, spp.rich, shannon)
+spp.rich.no.parakeet <- specnumber(allData[,c(2,3,4,5,6,7,9,10)], MARGIN=1) 
+shannon.no.parakeet <- diversity(allData[,c(2,3,4,5,6,7,9,10)])
+
+enrichedData <- cbind(allData, spp.rich, shannon, spp.rich.no.parakeet, shannon.no.parakeet)
 head(enrichedData)
 
 enrichedData$has_parakeet <- ifelse(enrichedData$Ring.necked.Parakeet==0, "No", "Yes")
@@ -82,7 +89,19 @@ ggplot(enrichedData, aes(x=has_parakeet, y=shannon)) +
 ```
 
 ```{r}
+ggplot(enrichedData, aes(x=has_parakeet, y=shannon.no.parakeet)) + 
+  geom_boxplot()
+
+```
+
+
+```{r}
 ggplot(enrichedData, aes(x=has_parakeet, y=spp.rich)) + 
+  geom_boxplot()
+
+```
+```{r}
+ggplot(enrichedData, aes(x=has_parakeet, y=spp.rich.no.parakeet)) + 
   geom_boxplot()
 
 ```
@@ -94,6 +113,13 @@ ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=shannon)) +
   geom_point()
 
 ```
+
+```{r}
+ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet)) + 
+  geom_point()
+
+```
+
 
 ```{r}
 names(enrichedData)
@@ -133,6 +159,22 @@ with(enrichedData, ordispider(nmds, has_parakeet, label=TRUE))
   ef <- envfit(nmds, enrichedData[12:17], na.rm = TRUE, permu = 999) 
   ef
 ```
+
+```{r}
+nmds.no.parakeet <- metaMDS(enrichedData[,c(2,3,4,5,6,7,9,10)], k=2, trymax = 30) 
+
+plot(nmds.no.parakeet, display = "sites")
+with(enrichedData, ordiellipse(nmds.no.parakeet, has_parakeet, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+with(enrichedData, ordispider(nmds.no.parakeet, has_parakeet, label=TRUE))
+```
+
+```{r}
+  ef.with.parakeets <- envfit(nmds.no.parakeet, enrichedData[,c(8,12,13,14,15,16,17)], na.rm = TRUE, permu = 999) 
+  ef.with.parakeets
+```
+
+
+
 
 
 ```{r}
