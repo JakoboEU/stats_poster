@@ -13,11 +13,10 @@ library(ggplot2)
 library(vegan)
 ```
 
-
-
 ```{r}
-birdData <- read_csv("manchesterbirding.csv")
+birdData <- read_csv("birds.csv")
 head(birdData)
+
 birdDataCountsOnly <- birdData[birdData$count != 'X',]
 birdDataCountsOnly$count_num <- as.numeric(birdDataCountsOnly$count)
 ```
@@ -37,6 +36,8 @@ birdDataDf <- setDT(birdDataDf, keep.rownames = TRUE)[]
 colnames(birdDataDf)[colnames(birdDataDf)=="rn"] <- "Site"
 head(birdDataDf)
 names(birdDataDf) <- make.names(names(birdDataDf), unique = TRUE)
+
+birdDataDf
 ```
 
 
@@ -89,7 +90,7 @@ ggplot(enrichedData, aes(x=has_parakeet, y=spp.rich)) +
 
 
 ```{r}
-ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=BroadLeavedWoodlandArea)) + 
+ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=shannon)) + 
   geom_point()
 
 ```
@@ -129,8 +130,8 @@ with(enrichedData, ordispider(nmds, has_parakeet, label=TRUE))
 ```
 
 ```{r}
-ef <- envfit(nmds, encrichedData[12:17], na.rm = TRUE, permu = 999) 
-ef
+  ef <- envfit(nmds, enrichedData[12:17], na.rm = TRUE, permu = 999) 
+  ef
 ```
 
 
