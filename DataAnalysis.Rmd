@@ -118,8 +118,11 @@ ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=shannon)) +
 ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet)) + 
   geom_point()
 
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$spp.rich.no.parakeet)
 ```
-
+```{r}
+pwr.r.test(n=56,r=0.4885025,sig.level = 0.05)
+```
 
 ```{r}
 names(enrichedData)
@@ -128,20 +131,20 @@ speciesShapiro[2,]
 ```
 ```{r}
 names(enrichedData)
-envShapiro <- sapply(enrichedData[12:17], shapiro.test)
+envShapiro <- sapply(enrichedData[12:18], shapiro.test)
 envShapiro[2,]
 ```
 
 ```{r}
-enrichedData[12:17]
-data.frame(sapply(enrichedData[12:17], sqrt))
+enrichedData[12:18]
+data.frame(sapply(enrichedData[12:18], sqrt))
 
-envShapiroSqrt <- sapply(data.frame(sapply(enrichedData[12:17], sqrt)), shapiro.test)
+envShapiroSqrt <- sapply(data.frame(sapply(enrichedData[12:18], sqrt)), shapiro.test)
 envShapiroSqrt[2,]
 ```
 
 ```{r}
-envLogDf <- data.frame(sapply(enrichedData[12:17], function(v) { l = log10(v); ifelse(v == -Inf, 0, v)}))
+envLogDf <- data.frame(sapply(enrichedData[12:18], function(v) { l = log10(v); ifelse(v == -Inf, 0, v)}))
 envShapiroLog <- sapply(envLogDf, shapiro.test)
 envShapiroLog[2,]
 ```
@@ -156,7 +159,7 @@ with(enrichedData, ordispider(nmds, has_parakeet, label=TRUE))
 ```
 
 ```{r}
-  ef <- envfit(nmds, enrichedData[12:17], na.rm = TRUE, permu = 999) 
+  ef <- envfit(nmds, enrichedData[12:18], na.rm = TRUE, permu = 999) 
   ef
 ```
 
@@ -169,10 +172,14 @@ with(enrichedData, ordispider(nmds.no.parakeet, has_parakeet, label=TRUE))
 ```
 
 ```{r}
-  ef.with.parakeets <- envfit(nmds.no.parakeet, enrichedData[,c(8,12,13,14,15,16,17)], na.rm = TRUE, permu = 999) 
+  ef.with.parakeets <- envfit(nmds.no.parakeet, enrichedData[,c(8,12,13,14,15,16,17,18)], na.rm = TRUE, permu = 999) 
   ef.with.parakeets
 ```
 
+```{r}
+sim.type<-anosim(enrichedData[,c(8,12,13,14,15,16,17,18)], enrichedData$has_parakeet, permutations = 999, distance = "bray") 
+summary(sim.type)
+```
 
 
 
@@ -183,6 +190,47 @@ with(enrichedData, ordiellipse(nmds, has_parakeet, col=4, lwd=2, draw = "polygon
 plot(ef, p.max = 0.2)
 with(enrichedData, ordispider(nmds, has_parakeet, label=TRUE))
 ```
+
+```{r}
+plot(nmds.no.parakeet, display = "sites")
+with(enrichedData, ordiellipse(nmds.no.parakeet, has_parakeet, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
+plot(ef.with.parakeets, p.max = 0.2)
+with(enrichedData, ordispider(nmds.no.parakeet, has_parakeet, label=TRUE))
+```
+
+
+```{r}
+sim.type<-anosim(enrichedData[12:18], enrichedData$has_parakeet, permutations = 999, distance = "bray") 
+summary(sim.type)
+```
+
+```{r}
+sim.type<-anosim(enrichedData[2:10], enrichedData$has_parakeet, permutations = 999, distance = "bray") 
+summary(sim.type)
+```
+
+
+```{r}
+nrow(enrichedData)
+```
+
+```{r}
+library(pwr)
+pwr.f2.test(u = 1, v = 55, f2 = 0.02, sig.level = 0.05)
+```
+```{r}
+pwr.r.test(r=0.2, sig.level=0.05 ,alternative="two.sided", power=0.8)
+```
+
+
+
+presense / absence on spp.rich/shannon
+abundance of parakeets on spp.rich/shannon
+
+effect of presence/absense on community structure -> nmds -> include environmental?
+ggplot presense/absense on abundance of each species. -> test each pair
+
+altitude?
 
 
 
