@@ -118,7 +118,7 @@ ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=shannon)) +
 ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet)) + 
   geom_point()
 
-cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$spp.rich.no.parakeet)
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$spp.rich.no.parakeet, method="spearman")
 ```
 ```{r}
 pwr.r.test(n=56,r=0.4885025,sig.level = 0.05)
