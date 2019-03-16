@@ -46,6 +46,8 @@ parkData <- read_csv("parkdata.csv")
 head(parkData)
 allData <- inner_join(birdDataDf, parkData,by="Site")
 head(allData)
+
+write.csv(allData, file = "AllData.csv")
 ```
 
 ```{r}
@@ -89,10 +91,36 @@ ggplot(enrichedData, aes(x=has_parakeet, y=shannon)) +
 ```
 
 ```{r}
+
+png("ParakeetPresense.png")
 ggplot(enrichedData, aes(x=has_parakeet, y=shannon.no.parakeet)) + 
-  geom_boxplot()
+  geom_boxplot() +
+  xlab("Are parakeets present?") + 
+  ylab("Shannon index of cavity-nesting species (excl. parakeets)")
+dev.off()
+```
+
+```{r}
+shapiro.test(allData$Ring.necked.Parakeet) # p-value = 1.834e-11
+shapiro.test(enrichedData$shannon.no.parakeet) # p-value = 0.02207
+
+wilcox.test(enrichedData$shannon.no.parakeet ~ enrichedData$has_parakeet)
+
+# W = 200, p-value = 0.01299
+nrow(enrichedData)
+
+pwr.t.test(power = NULL, d=0.5, n=56, sig.level=0.05, type = "one.sample", alternative = "two.sided")
+
+mean(enrichedData[enrichedData$has_parakeet == 'Yes',]$shannon.no.parakeet) # 0.9866319
+sd(enrichedData[enrichedData$has_parakeet == 'Yes',]$shannon.no.parakeet) # 0.4047124
+
+mean(enrichedData[enrichedData$has_parakeet == 'No',]$shannon.no.parakeet) # 0.6449975
+sd(enrichedData[enrichedData$has_parakeet == 'No',]$shannon.no.parakeet) #  0.4658505000
+
+
 
 ```
+
 
 
 ```{r}
@@ -109,10 +137,20 @@ ggplot(enrichedData, aes(x=has_parakeet, y=spp.rich.no.parakeet)) +
 
 
 ```{r}
-ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=shannon)) + 
-  geom_point()
+png("ParakeetAndSpeciesRichness.png")
+ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet, color=Function)) + 
+  geom_point() +
+  xlab("Number of parakeets found") + 
+  ylab("Speciess richness of cavity-nesting species (excl. parakeets)")
+dev.off()
+```
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$spp.rich.no.parakeet, method="spearman")
+# S = 13680, p-value = 2.401e-05, rho = 0.5324526 
 
 ```
+
 
 ```{r}
 ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet)) + 
@@ -121,8 +159,8 @@ ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet)) +
 cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$spp.rich.no.parakeet, method="spearman")
 ```
 ```{r}
-pwr.r.test(n=56,r=0.4885025,sig.level = 0.05)
-```
+pwr.r.test(n=56,r=0.53,sig.level = 0.05)
+s```
 
 ```{r}
 names(enrichedData)
@@ -166,9 +204,14 @@ with(enrichedData, ordispider(nmds, has_parakeet, label=TRUE))
 ```{r}
 nmds.no.parakeet <- metaMDS(enrichedData[,c(2,3,4,5,6,7,9,10)], k=2, trymax = 30) 
 
+sim.type<-anosim(enrichedData[,c(2,3,4,5,6,7,9,10)], enrichedData$has_parakeet, permutations = 999, distance = "bray") 
+summary(sim.type)
+
+png("NMDS.png")
 plot(nmds.no.parakeet, display = "sites")
 with(enrichedData, ordiellipse(nmds.no.parakeet, has_parakeet, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
 with(enrichedData, ordispider(nmds.no.parakeet, has_parakeet, label=TRUE))
+dev.off()
 ```
 
 ```{r}
@@ -185,7 +228,7 @@ summary(sim.type)
 
 
 ```{r}
-plot(nmds, display = "sites")
+plot(nmds., display = "sites")
 with(enrichedData, ordiellipse(nmds, has_parakeet, col=4, lwd=2, draw = "polygon", kind = c("sd")), label=T) 
 plot(ef, p.max = 0.2)
 with(enrichedData, ordispider(nmds, has_parakeet, label=TRUE))
@@ -233,177 +276,19 @@ ggplot presense/absense on abundance of each species. -> test each pair
 altitude?
 
 
-
-
----------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------
-OLD DATA:
----------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------
-
 ```{r}
-data  <- read_csv("Data.csv")
-head(data)
+names(enrichedData)
+speciesPerRow <- gather(data=enrichedData, key=species, value=count,Common.Starling,Eurasian.Blue.Tit,European.Green.Woodpecker,Great.Spotted.Woodpecker,Great.Tit,Jackdaw,Stock.Dove,Tawny.Owl, factor_key=TRUE)
+head(speciesPerRow)
 ```
 
 ```{r}
-names(data)
-data[4:12]
-```
-
-
-```{r}
-cor(data[5:13])
-```
-
-```{r}
-names(data)
-names(data[5:13])
-spp.rich <- specnumber(data[5:13], MARGIN=1) 
-shannon <- diversity(data[5:13])
-
-spp.rich.without.parakeet <- specnumber(data[6:13], MARGIN=1) 
-shannon.without.parakeet <- diversity(data[6:13])
-
-data <- cbind(data, spp.rich, shannon, spp.rich.without.parakeet, shannon.without.parakeet)
-
-names(data)
-ggplot(data, aes(x=city, y=shannon)) + 
-  geom_boxplot()
-
-
-ggplot(data, aes(x=city, y=spp.rich.without.parakeet)) + 
-  geom_boxplot()
-
-ggplot(data, aes(x=city_type, y=spp.rich.without.parakeet)) + 
-  geom_boxplot()
-```
-
-```{r}
-ggplot(data, aes(x=city, y=spp.rich)) + 
-  geom_boxplot()
-```
-
-```{r}
-nmds <- metaMDS(data[5:13], k=2, trymax = 30) 
-
-nmds.no.parakeet <- metaMDS(data[6:13], k=2, trymax = 30) 
-
-```
-
-```{r}
-plot(nmds, display = "sites")
-with(data, ordiellipse(nmds, city, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
-with(data, ordispider(nmds, city, label=TRUE))
-```
-
-
-```{r}
-plot(nmds, display = "sites")
-with(data, ordiellipse(nmds.no.parakeet, city_type, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
-with(data, ordispider(nmds.no.parakeet, city_type, label=TRUE))
-```
-
-
-
-
-```{r}
-names(data)
-names(data[14:24])
-pairs(data[14:24])
-```
-
-```{r}
-names(data)
-cor(data[14:24])
-```
-
-```{r}
-
-ef <- envfit(nmds, data[14:24], na.rm = TRUE, permu = 999) 
-ef
-
-```
-
-```{r}
-
-ef.with.parakeet <- envfit(nmds, data[c(5, 14:24)], na.rm = TRUE, permu = 999) 
-ef.with.parakeet
-
-```
-
-
-
-```{r}
-plot(nmds, display = "sites")
-with(data, ordiellipse(nmds, city, col=4, lwd=2, draw = "polygon", kind = c("sd"))) 
-plot(ef, p.max = 0.1)
-```
-
-```{r}
-#jpeg(filename="communities.jpg")
-plot(nmds.no.parakeet, display = "sites")
-with(data, ordiellipse(nmds.no.parakeet, city_type, col=4, lwd=2, draw = "polygon", kind = c("sd")), label=T) 
-plot(ef.with.parakeet, p.max = 0.1)
-with(data, ordispider(nmds.no.parakeet, city_type, label=TRUE))
-#dev.off()
-```
-
-
-
-```{r}
-env.pca <- rda(data[14:24], scale=TRUE) 
-summary(env.pca)
-biplot(env.pca)
-
-```
-
-
-```{r}
-names(data)
-```
-
-
-```{r}
-model1 <- lm(nuthatch~parakeet + perc_large_tree_cover + area_hect + distance_city_km, data = data)
-summary(model1)
-```
-```{r}
-model2 <- lm(nuthatch~parakeet * perc_large_tree_cover * area_hect * distance_city_km, data = data)
-summary(model2)
-```
-
-```{r}
-model3 <- glm(spp.rich~parakeet + large_tree_cover_hect + area_hect + distance_city_km + shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
-summary(model3)
-```
-
-
-```{r}
-model4 <- glm(spp.rich~parakeet * large_tree_cover_hect * area_hect * distance_city_km * shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
-summary(model4)
-```
-
-
-
-
-```{r}
-model5 <- glm(shannon~parakeet + large_tree_cover_hect + area_hect + distance_city_km + shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
-summary(model5)
-```
-
-
-
-```{r}
-model6 <- glm(spp.rich~great_spotted_woodpecker + large_tree_cover_hect + area_hect + distance_city_km + shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
-summary(model6)
-```
-
-
-
-```{r}
-model7 <- glm(spp.rich~great_spotted_woodpecker * large_tree_cover_hect * area_hect * distance_city_km * shrub_cover_hect, data = data[data$city == 'Manchester',], family=poisson)
-summary(model7)
+png("speciesData.png", width=800, height=480)
+ggplot(speciesPerRow, aes(x=species, y=log10(count), fill=has_parakeet)) + 
+  geom_boxplot(position = position_dodge()) +
+  scale_x_discrete(labels = c("Starling", "Blue Tit", "Green Woodp.", "Great Spot. Woodp.", "Great Tit", "Jackdaw", "Stock Dove", "Tawny Owl")) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position="bottom") +
+  ylab("Log 10 of Count") + xlab("Species") +
+  guides(fill=guide_legend(title="Are parakeets present?"))
+dev.off()
 ```
