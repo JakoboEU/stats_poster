@@ -11,6 +11,7 @@ list.files()
 library(tidyverse)
 library(ggplot2)
 library(vegan)
+library(pwr)
 ```
 
 ```{r}
@@ -160,7 +161,7 @@ cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$spp.rich.no.parakeet, m
 ```
 ```{r}
 pwr.r.test(n=56,r=0.53,sig.level = 0.05)
-s```
+```
 
 ```{r}
 names(enrichedData)
@@ -228,7 +229,7 @@ summary(sim.type)
 
 
 ```{r}
-plot(nmds., display = "sites")
+plot(nmds, display = "sites")
 with(enrichedData, ordiellipse(nmds, has_parakeet, col=4, lwd=2, draw = "polygon", kind = c("sd")), label=T) 
 plot(ef, p.max = 0.2)
 with(enrichedData, ordispider(nmds, has_parakeet, label=TRUE))
@@ -258,7 +259,6 @@ nrow(enrichedData)
 ```
 
 ```{r}
-library(pwr)
 pwr.f2.test(u = 1, v = 55, f2 = 0.02, sig.level = 0.05)
 ```
 ```{r}
@@ -291,4 +291,47 @@ ggplot(speciesPerRow, aes(x=species, y=log10(count), fill=has_parakeet)) +
   ylab("Log 10 of Count") + xlab("Species") +
   guides(fill=guide_legend(title="Are parakeets present?"))
 dev.off()
+```
+
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Common.Starling, method="spearman")
+pwr.r.test(r=0.194179, n=56, sig.level=0.05 ,alternative="two.sided")
+
+```
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Eurasian.Blue.Tit, method="spearman")
+pwr.r.test(r=0.2298622, n=56, sig.level=0.05 ,alternative="two.sided")
+```
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$European.Green.Woodpecker, method="spearman")
+pwr.r.test(r=0.3020085, n=56, sig.level=0.05 ,alternative="two.sided")
+```
+
+
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Great.Spotted.Woodpecker, method="spearman")
+pwr.r.test(r=0.4154695, n=56, sig.level=0.05 ,alternative="two.sided")
+```
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Great.Tit, method="spearman")
+pwr.r.test(r=0.2378639, n=56, sig.level=0.05 ,alternative="two.sided")
+```
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Jackdaw, method="spearman")
+pwr.r.test(r=0.3818765, n=56, sig.level=0.05 ,alternative="two.sided")
+```
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Stock.Dove, method="spearman")
+pwr.r.test(r=0.3587421, n=56, sig.level=0.05 ,alternative="two.sided")
+```
+
+```{r}
+cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Tawny.Owl, method="spearman")
+pwr.r.test(r=0.5676906, n=56, sig.level=0.05 ,alternative="two.sided")
 ```
