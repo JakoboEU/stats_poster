@@ -118,8 +118,8 @@ sd(enrichedData[enrichedData$has_parakeet == 'Yes',]$shannon.no.parakeet) # 0.40
 mean(enrichedData[enrichedData$has_parakeet == 'No',]$shannon.no.parakeet) # 0.6449975
 sd(enrichedData[enrichedData$has_parakeet == 'No',]$shannon.no.parakeet) #  0.4658505000
 
-
-
+nrow(enrichedData[enrichedData$has_parakeet == 'Yes',])
+nrow(enrichedData[enrichedData$has_parakeet == 'No',])
 ```
 
 
