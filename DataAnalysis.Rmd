@@ -138,7 +138,7 @@ ggplot(enrichedData, aes(x=has_parakeet, y=spp.rich.no.parakeet)) +
 
 
 ```{r}
-png("ParakeetAndSpeciesRichness.png")
+png("ParakeetAndSpeciesRichness.png", height=340)
 ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet, color=Function)) + 
   geom_point() +
   xlab("Number of parakeets found") + 
