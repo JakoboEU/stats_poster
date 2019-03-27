@@ -93,7 +93,7 @@ ggplot(enrichedData, aes(x=has_parakeet, y=shannon)) +
 
 ```{r}
 
-png("ParakeetPresense.png")
+png("ParakeetPresense.png", height=340)
 ggplot(enrichedData, aes(x=has_parakeet, y=shannon.no.parakeet)) + 
   geom_boxplot() +
   xlab("Are parakeets present?") + 
