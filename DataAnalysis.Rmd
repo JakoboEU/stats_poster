@@ -91,15 +91,6 @@ ggplot(enrichedData, aes(x=has_parakeet, y=shannon)) +
 
 ```
 
-```{r}
-
-png("ParakeetPresense.png",height=500,width=750)
-ggplot(enrichedData, aes(x=has_parakeet, y=shannon.no.parakeet)) + 
-  geom_boxplot() +
-  xlab("Are parakeets present?") + 
-  ylab("Shannon index of cavity-nesting species (excl. parakeets)")
-dev.off()
-```
 
 ```{r}
 shapiro.test(allData$Ring.necked.Parakeet) # p-value = 1.834e-11
@@ -145,14 +136,7 @@ ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet, color=F
   ylab("Speciess richness of cavity-nesting species (excl. parakeets)")
 dev.off()
 ```
-```{r}
-png("ParakeetAndSpeciesRichness2.png", height=550, width=750)
-ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet)) + 
-  geom_point() +
-  xlab("Number of parakeets found") + 
-  ylab("Speciess richness of cavity-nesting species (excl. parakeets)")
-dev.off()
-```
+
 
 
 ```{r}
@@ -223,20 +207,7 @@ with(enrichedData, ordiellipse(nmds.no.parakeet, has_parakeet, col=4, lwd=2, dra
 with(enrichedData, ordispider(nmds.no.parakeet, has_parakeet, label=TRUE))
 dev.off()
 ```
-```{r}
-nmds1 <- nmds.no.parakeet$points[,1]
-nmds2 <- nmds.no.parakeet$points[,2]
-enrichedData$site.abb <- abbreviate(enrichedData$Site)
-png("NMDS2.png", height=700, width=700)
-ggplot(enrichedData, aes(x=nmds1, y=nmds2, col=has_parakeet)) +
- geom_point() +
- stat_ellipse() +
- xlab("NMDS 1") + ylab("NMDS 2") +
-  guides(col= guide_legend(title="Are Parakeets Present?")) +
-  geom_text(data=enrichedData,aes(x=nmds1, y=nmds2,label=site.abb),size=2,vjust=0,hjust=0) +
-  theme(legend.position = "bottom")
-dev.off()
-```
+
 
 
 
@@ -361,4 +332,44 @@ pwr.r.test(r=0.3587421, n=56, sig.level=0.05 ,alternative="two.sided")
 ```{r}
 cor.test(enrichedData$Ring.necked.Parakeet, enrichedData$Tawny.Owl, method="spearman")
 pwr.r.test(r=0.5676906, n=56, sig.level=0.05 ,alternative="two.sided")
+```
+
+
+
+```{r}
+theme <- theme(axis.text.x = element_text(size = 16), axis.text.y = element_text(size = 16), 
+               axis.title.x = element_text(size = 16), axis.title.y = element_text(size = 16))
+
+
+png("ParakeetPresense.png",height=500,width=750)
+ggplot(enrichedData, aes(x=has_parakeet, y=shannon.no.parakeet, fill=has_parakeet)) + 
+  geom_boxplot() +
+  xlab("Are parakeets present?") + 
+  ylab("Shannon index of cavity-nesting species (excl. parakeets)") +
+  theme(legend.position = "none") +
+  theme
+dev.off()
+
+png("ParakeetAndSpeciesRichness2.png", height=550, width=750)
+ggplot(enrichedData, aes(x=Ring.necked.Parakeet, y=spp.rich.no.parakeet)) + 
+  geom_point() +
+  xlab("Number of parakeets found") + 
+  ylab("Speciess richness of cavity-nesting species (excl. parakeets)") + 
+  theme
+dev.off()
+
+
+nmds1 <- nmds.no.parakeet$points[,1]
+nmds2 <- nmds.no.parakeet$points[,2]
+enrichedData$site.abb <- abbreviate(enrichedData$Site)
+png("NMDS2.png", height=700, width=700)
+ggplot(enrichedData, aes(x=nmds1, y=nmds2, col=has_parakeet)) +
+ geom_point() +
+ stat_ellipse() +
+ xlab("NMDS 1") + ylab("NMDS 2") +
+  guides(col= guide_legend(title="Are Parakeets Present?")) +
+  geom_text(data=enrichedData,aes(x=nmds1, y=nmds2,label=site.abb),size=4,vjust=0,hjust=0) +
+  theme +
+  theme(legend.position = "bottom", legend.title=element_text(size=16), legend.text=element_text(size=16), legend.key.size=unit(1, "cm"))
+dev.off()
 ```
